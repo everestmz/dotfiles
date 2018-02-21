@@ -1,0 +1,12 @@
+#! /bin/bash
+set -e
+
+export BASE=$(basename $1)
+
+if [ -e $1 ] && [ ! -L $1 ]
+then
+  mv $1 ./backups/$BASE
+else
+  rm -rf $1
+fi
+ln -s $(pwd)/$BASE $1
