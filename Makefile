@@ -12,6 +12,7 @@ tmux:
 zsh:
 	@echo "====================="
 	@echo "= Linking zsh files:"	
+	git clone --recurse-submodules https://github.com/everestmz/zprezto.git ./.zprezto
 	mkdir -p ./backups
 	scripts/link ~/.zshrc
 	scripts/link ~/.zprezto
@@ -21,6 +22,8 @@ zsh:
 vim:
 	@echo "====================="
 	@echo "= Linking vim files:"	
+	git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim
+	#igit clone  .vim/bundle/vundle
 	mkdir -p ./backups
 	scripts/link ~/.vim
 	scripts/link ~/.vimrc
