@@ -1,9 +1,20 @@
 # Everest Munro-Zeisberger zshrc
 # Source Prezto.
+
+if [ "$TMUX" = "" ]; then tmux; fi
+
 export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
   source "$HOME/.zprezto/init.zsh"
 fi
+
+###########
+# HISTORY #
+###########
+
+HISTFILE=~/.histfile
+HISTSIZE=5000
+SAVEHIST=5000
 
 ########
 # PATH #
