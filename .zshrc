@@ -83,6 +83,7 @@ alias migrate='be rake db:migrate'
 alias ura='gfop && bundle install && bundle exec rake db:migrate db:test:prepare'
 
 # Shell
+alias l='ls'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
