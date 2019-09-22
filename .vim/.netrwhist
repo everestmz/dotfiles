@@ -1,7 +1,10 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_cnt =8
 let g:netrw_dirhist_1='/Users/everest/.zprezto'
 let g:netrw_dirhist_2='/Users/everest/.tmux'
 let g:netrw_dirhist_3='/Users/everest/.zprezto/modules/prompt'
 let g:netrw_dirhist_4='/Users/everest/tmux_confs'
 let g:netrw_dirhist_5='/etc/apt/sources.list.d'
+let g:netrw_dirhist_6='/Users/everest/go/src/codeship-test/.git'
+let g:netrw_dirhist_7='/Users/everest/src/fuzzbuzz/fuzzers/.git'
+let g:netrw_dirhist_8='/private/var/folders/cc/pj170w3d72780qrt67chp5p40000gn/T/go-fuzz-build125788232/gopath/src/github.com/fuzzbuzz/tutorial-go/go.fuzz.main'

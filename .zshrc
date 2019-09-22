@@ -1,8 +1,6 @@
 # Everest Munro-Zeisberger zshrc
 # Source Prezto.
 
-if [ "$TMUX" = "" ]; then tmux; fi
-
 export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
   source "$HOME/.zprezto/init.zsh"
@@ -40,19 +38,12 @@ export PATH=$SYS161/bin:$PATH
 export PATH=$SYS161/tools/bin:$PATH
 export SYS161=$HOME/sys161
 
+# AFL
+export PATH=$PATH:$HOME/src/afl-2.52b
+
 ##########
 # GCLOUD #
 ##########
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f /Users/everest/repos/google-cloud-sdk/path.zsh.inc ]; then
-  source '/Users/everest/repos/google-cloud-sdk/path.zsh.inc'
-fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f /Users/everest/repos/google-cloud-sdk/completion.zsh.inc ]; then
-  source '/Users/everest/repos/google-cloud-sdk/completion.zsh.inc'
-fi
 
 ###########
 # Aliases #
@@ -87,9 +78,13 @@ alias l='ls'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
+alias git='/usr/local/bin/git'
 
 # C++
 alias g++11="g++ -std=c++11"
+
+# Kubernetes
+alias kc='kubectl'
 
 ###########
 # Plugins #
@@ -97,3 +92,9 @@ alias g++11="g++ -std=c++11"
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/Users/everest/src/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/everest/src/google-cloud-sdk/path.zsh.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/Users/everest/src/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/everest/src/google-cloud-sdk/completion.zsh.inc'; fi
