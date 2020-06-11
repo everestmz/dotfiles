@@ -5,6 +5,27 @@ export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
 if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
   source "$HOME/.zprezto/init.zsh"
 fi
+export PATH=/usr/local/bin:$PATH
+
+. $HOME/z/z.sh
+
+fpath=($HOME/dotfiles/completions $fpath)
+
+###############
+# OS-SPECIFIC #
+###############
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  # Linux stuff
+  echo "Loading linux-specific preferences"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  # macOS stuff
+   echo "Loading macOS-specific preferences"
+
+  # Homebrew Curl
+  export PATH="/usr/local/opt/curl/bin:$PATH"
+ else 
+  # Unknown
+fi
 
 ###########
 # HISTORY #
@@ -22,6 +43,9 @@ SAVEHIST=5000
 export PATH=$PATH:/Users/everest/anaconda2/bin
 export PATH="/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
 
+# Rust
+export PATH="$HOME/.cargo/bin:${PATH}"
+
 # Go
 export PATH="$PATH:/usr/local/go/bin"
 export GOPATH=$HOME/go
@@ -32,14 +56,8 @@ export PATH=$GOBIN:$PATH
 export PATH=$PATH:/Applications/Racket\ v6.9/bin
 export PATH=$PATH:/Library/TeX/Root/bin/x86_64-darwin/pdflatex
 export PATH=$PATH:/Users/everest/Library/Android/sdk/platform-tools
-
-# CS 350
-export PATH=$SYS161/bin:$PATH
-export PATH=$SYS161/tools/bin:$PATH
-export SYS161=$HOME/sys161
-
-# AFL
-export PATH=$PATH:$HOME/src/afl-2.52b
+export PATH=$PATH:/usr/local/share/dotnet
+export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
 
 ##########
 # GCLOUD #
@@ -78,13 +96,15 @@ alias l='ls'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
-alias git='/usr/local/bin/git'
 
 # C++
 alias g++11="g++ -std=c++11"
 
 # Kubernetes
 alias kc='kubectl'
+
+# Stuff
+alias newpassword='date +%s | shasum | base64 | head -c 32 ; echo'
 
 ###########
 # Plugins #
@@ -98,3 +118,6 @@ if [ -f '/Users/everest/src/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/eve
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/everest/src/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/everest/src/google-cloud-sdk/completion.zsh.inc'; fi
+
+gpgconf --launch gpg-agent
+
