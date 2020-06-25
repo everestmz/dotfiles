@@ -21,6 +21,9 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   # macOS stuff
    echo "Loading macOS-specific preferences"
 
+   # Homebrew Make
+   PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
+
   # Homebrew Curl
   export PATH="/usr/local/opt/curl/bin:$PATH"
  else 
