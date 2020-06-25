@@ -1,13 +1,35 @@
 # Everest Munro-Zeisberger zshrc
-# Source Prezto.
 
-export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+# Source Prezto.
 if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
   source "$HOME/.zprezto/init.zsh"
 fi
-export PATH=/usr/local/bin:$PATH
 
-. $HOME/z/z.sh
+# Email notifications on the command line? We're in the 21st century!
+unset MAILCHECK
+
+# Import local config if exists
+if [ -f $HOME/.zshrc_local ]; then
+  echo "Importing configuration from $HOME/.zshrc_local"
+  source $HOME/.zshrc_local
+else
+  echo "No local configuration found in $HOME/.zshrc_local"
+fi
+
+# Import utilities
+if [ -f $HOME/z/z.sh ]; then
+  echo "z found - directory jumping enabled"
+  . $HOME/z/z.sh
+else
+  echo "z not available"
+fi
+
+if [ -f ~/.fzf.zsh ]; then
+  echo "fzf found - fuzzy finding enabled"
+  source ~/.fzf.zsh
+else
+  echo "fzf not available"
+fi
 
 fpath=($HOME/dotfiles/completions $fpath)
 
@@ -19,14 +41,15 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   echo "Loading linux-specific preferences"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # macOS stuff
-   echo "Loading macOS-specific preferences"
+  echo "Loading macOS-specific preferences"
 
-   # Homebrew Make
-   PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
+  # Homebrew Make
+  PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 
   # Homebrew Curl
   export PATH="/usr/local/opt/curl/bin:$PATH"
- else 
+else 
+  echo "Unknown Operating System - no special preferences loaded"
   # Unknown
 fi
 
@@ -35,12 +58,14 @@ fi
 ###########
 
 HISTFILE=~/.histfile
-HISTSIZE=5000
-SAVEHIST=5000
+HISTSIZE=10000
+SAVEHIST=500000
 
 ########
 # PATH #
 ########
+
+export PATH=/usr/local/bin:$PATH
 
 # Python
 export PATH=$PATH:/Users/everest/anaconda2/bin
@@ -49,22 +74,21 @@ export PATH="/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Version
 # Rust
 export PATH="$HOME/.cargo/bin:${PATH}"
 
+# Ruby
+export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
 # Go
 export PATH="$PATH:/usr/local/go/bin"
 export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$GOBIN:$PATH
 
-# Languages
+# Other Languages
 export PATH=$PATH:/Applications/Racket\ v6.9/bin
 export PATH=$PATH:/Library/TeX/Root/bin/x86_64-darwin/pdflatex
 export PATH=$PATH:/Users/everest/Library/Android/sdk/platform-tools
 export PATH=$PATH:/usr/local/share/dotnet
 export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
-
-##########
-# GCLOUD #
-##########
 
 ###########
 # Aliases #
@@ -91,7 +115,7 @@ alias R=". ~/.zshrc"
 alias bi='bundle install'
 alias be='bundle exec'
 alias berc='be rails console'
-alias migrate='be rake db:migrate'
+alias bmigrate='be rake db:migrate'
 alias ura='gfop && bundle install && bundle exec rake db:migrate db:test:prepare'
 
 # Shell
@@ -99,6 +123,7 @@ alias l='ls'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
+alias s='sudo'
 
 # C++
 alias g++11="g++ -std=c++11"
@@ -114,13 +139,6 @@ alias newpassword='date +%s | shasum | base64 | head -c 32 ; echo'
 ###########
 
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/everest/src/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/everest/src/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/everest/src/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/everest/src/google-cloud-sdk/completion.zsh.inc'; fi
 
 gpgconf --launch gpg-agent
 
