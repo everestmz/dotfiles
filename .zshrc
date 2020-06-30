@@ -8,6 +8,15 @@ fi
 # Email notifications on the command line? We're in the 21st century!
 unset MAILCHECK
 
+# Set the cursor to desired shape:
+# echo -e -n "\x1b[\x30 q" # changes to blinking block
+# echo -e -n "\x1b[\x31 q" # changes to blinking block also
+# echo -e -n "\x1b[\x32 q" # changes to steady block
+# echo -e -n "\x1b[\x33 q" # changes to blinking underline
+echo -e -n "\x1b[\x34 q" # changes to steady underline
+# echo -e -n "\x1b[\x35 q" # changes to blinking bar
+# echo -e -n "\x1b[\x36 q" # changes to steady bar
+
 # Import local config if exists
 if [ -f $HOME/.zshrc_local ]; then
   echo "Importing configuration from $HOME/.zshrc_local"
@@ -27,6 +36,8 @@ fi
 if [ -f ~/.fzf.zsh ]; then
   echo "fzf found - fuzzy finding enabled"
   source ~/.fzf.zsh
+elif which fzf > /dev/null; then
+  echo "fzf found - fuzzy finding enabled"
 else
   echo "fzf not available"
 fi
