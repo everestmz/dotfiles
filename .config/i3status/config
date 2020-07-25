@@ -1,0 +1,50 @@
+general {
+  output_format = "i3bar"
+  colors = true
+  interval = 5
+}
+
+order += "disk /home"
+order += "wireless wlp115s0"
+order += "ethernet enp0s31f6"
+order += "cpu_temperature 0"
+order += "cpu_usage"
+order += "memory"
+order += "tztime local"
+
+disk "/home" {
+  format = "%used/%total"
+}
+
+wireless wlp115s0 {
+  format_up = "W:%quality at %essid, %bitrate (%ip)"
+  format_down = "W: down"
+}
+
+ethernet enp0s31f6 {
+  format_up = "E: %speed (%ip)"
+  format_down = "E: down"
+}
+
+cpu_temperature 0 {
+  format = "T: %degrees °C"
+  path = /sys/class/hwmon/hwmon1/temp1_input
+}
+
+cpu_usage {
+  format = "usage: %cpu0 %cpu1 %cpu2 %cpu3"
+  max_threshold = 90
+  format_above_threshold = "usage: %cpu0 %cpu1 %cpu2 %cpu3"
+  degraded_threshold = 75
+  format_above_degraded_threshold = "usage: %cpu0 %cpu1 %cpu2 %cpu3"
+}
+
+memory {
+  format = "%used/%total"
+  threshold_degraded = "10%"
+  format_degraded = "LOW MEMORY: %free"
+}
+
+tztime local {
+  format = "%Y-%m-%d %H:%M:%S"
+}

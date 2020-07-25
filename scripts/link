@@ -1,12 +1,12 @@
 #! /bin/bash
 set -e
 
-export BASE=$(basename $1)
+export HOMELOCATION=$HOME/$1
 
-if [ -e $1 ] && [ ! -L $1 ]
+if [ -e $HOMELOCATION ] && [ ! -L $HOMELOCATION ]
 then
-  mv $1 ./backups/$BASE
+  mv $HOMELOCATION ./backups/$1
 else
-  rm -rf $1
+  rm -rf $HOMELOCATION
 fi
-ln -s $(pwd)/$BASE $1
+ln -s $(pwd)/$1 $HOMELOCATION
