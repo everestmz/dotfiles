@@ -76,7 +76,7 @@ SAVEHIST=500000
 # PATH #
 ########
 
-export PATH=/usr/local/bin:$PATH
+export PATH=/usr/local/bin:${HOME}/.npm-global/bin:$PATH
 
 # Python
 export PATH=$PATH:/Users/everest/anaconda2/bin
