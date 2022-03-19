@@ -21,13 +21,15 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'easymotion/vim-easymotion'
 Plugin 'mbbill/undotree'
 Plugin 'yegappan/grep'
-Plugin 'herringtondarkholme/yats.vim'
-Plugin 'quramy/tsuquyomi'
+" Plugin 'herringtondarkholme/yats.vim'
+" Plugin 'quramy/tsuquyomi'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'majutsushi/tagbar'
-Plugin 'ludovicchabant/vim-gutentags'
+" Plugin 'ludovicchabant/vim-gutentags'
 Plugin 'blueyed/vim-diminactive'
 Plugin 'tpope/vim-sleuth'
+Plugin 'sbdchd/neoformat'
+Plugin 'gko/vim-coloresque'
 
 execute pathogen#infect()
 
@@ -36,7 +38,23 @@ let g:ctrlp_cmd = 'CtrlP'
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_custom_ignore = 'node_modules'
 
+let g:coc_global_extensions = ['coc-tsserver']
+
 set mouse=a
+
+autocmd BufWritePre *.ts Neoformat
+let g:neoformat_javascript_prettier = {
+            \ 'exe': './node_modules/.bin/prettier',
+            \ 'args': ['--write', '--config .prettierrc'],
+            \ 'replace': 1
+            \ }
+let g:neoformat_enabled_javascript = ['prettier']
+
+" autocompletion code binding
+
+nmap <silent> gD :only<bar>split<CR><Plug>(coc-definition)
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
 
 syntax on
 set number
@@ -76,7 +94,7 @@ let g:go_highlight_functions = 1
 let g:go_highlight_function_calls = 1
 let g:go_highlight_extra_types = 1
 let g:go_highlight_operators = 1
-
+" 
 "“ Auto formatting and importing
 let g:go_fmt_autosave = 1
 let g:go_fmt_command = "goimports"
@@ -85,9 +103,9 @@ let mapleader=","
 
 " Overrides
 "" This one opens definitions in a split
-nnoremap gd :only<bar>vsplit<CR>gd
+" nnoremap gd :only<bar>split<CR>gd
 "" This one opens definitions in preview
-nnoremap gd :<C-u>pedit %<Bar>wincmd P<Bar>norm! gd<Bar><CR>
+" nnoremap gp :<C-u>pedit %<Bar>wincmd P<Bar>norm! gd<Bar><CR>
 
 
 "" Easymotion configuration
@@ -118,79 +136,9 @@ inoremap {<CR> {<CR>}<Esc>ko
 inoremap [<CR> [<CR>]<Esc>ko
 inoremap (<CR> (<CR>)<Esc>ko
 
-
-" tags
-set tags=~/.cache/tags/.tags;,.tags
-let g:gutentags_project_root = ['.root', '.svn', '.git', '.hg', '.project']
-let g:gutentags_ctags_tagfile = '.tags'
-
-let g:gutentags_modules = ['ctags']
-
-let g:gutentags_cache_dir = expand('~/.cache/tags')
-let g:gutentags_ctags_extra_args = ['--fields=+niazS', '--extra=+q']
-let g:gutentags_ctags_extra_args += ['--c++-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--c-kinds=+px']
-let g:gutentags_ctags_extra_args += ['--output-format=e-ctags']
-let g:gutentags_ctags_extra_args += ['--map-TypeScript=+.tsx']
-let g:tagbar_ctags_bin = '/usr/bin/ctags'
-
 " vim hardcodes background color erase even if the terminfo file does
 " not contain bce (not to mention that libvte based terminals
 " incorrectly contain bce in their terminfo files). This causes
 " incorrect background rendering when using a color theme with a
 " background color.
 let &t_ut=''
-
-let g:tagbar_type_typescript = {
-    \ 'ctagstype': 'typescript',
-    \ 'kinds': [
-      \ 'c:class',
-      \ 'n:namespace',
-      \ 'f:function',
-      \ 'G:generator',
-      \ 'v:variable',
-      \ 'm:method',
-      \ 'p:property',
-      \ 'i:interface',
-      \ 'g:enum',
-      \ 't:type',
-      \ 'a:alias',
-    \ ],
-    \'sro': '.',
-      \ 'kind2scope' : {
-      \ 'c' : 'class',
-      \ 'n' : 'namespace',
-      \ 'i' : 'interface',
-      \ 'f' : 'function',
-      \ 'G' : 'generator',
-      \ 'm' : 'method',
-      \ 'p' : 'property',
-      \},
-  \ }
-
- let g:tagbar_type_typescriptreact = {
-\ 'ctagstype': 'typescript',
-\ 'kinds': [
-  \ 'c:class',
-  \ 'n:namespace',
-  \ 'f:function',
-  \ 'G:generator',
-  \ 'v:variable',
-  \ 'm:method',
-  \ 'p:property',
-  \ 'i:interface',
-  \ 'g:enum',
-  \ 't:type',
-  \ 'a:alias',
-\ ],
-\'sro': '.',
-  \ 'kind2scope' : {
-  \ 'c' : 'class',
-  \ 'n' : 'namespace',
-  \ 'i' : 'interface',
-  \ 'f' : 'function',
-  \ 'G' : 'generator',
-  \ 'm' : 'method',
-  \ 'p' : 'property',
-  \},
-\ }
