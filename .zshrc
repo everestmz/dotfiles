@@ -153,3 +153,4 @@ alias newpassword='date +%s | shasum | base64 | head -c 32 ; echo'
 
 gpgconf --launch gpg-agent
 
+export PASSWORD_STORE_GPG_OPTS=--no-throw-keyids
