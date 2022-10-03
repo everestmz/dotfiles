@@ -33,7 +33,7 @@ zstyle ':prezto:load' pmodule \
   'prompt'
 
 # presto theme
-zstyle ':prezto:module:prompt' theme 'powerline'
+zstyle ':prezto:module:prompt' theme 'minimal'
 
 # Set syntax highlighters.
 # By default, only the main highlighter is enabled.

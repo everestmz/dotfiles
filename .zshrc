@@ -5,6 +5,14 @@ if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
   source "$HOME/.zprezto/init.zsh"
 fi
 
+if [ -v SSH_CONNECTION ]; then
+  if [[ $PROMPT == *"${HOST}"* ]]; then
+    echo "SSH Prompt set"
+  else
+    export PROMPT="[${HOST}] ${PROMPT}"
+  fi
+fi
+
 # Email notifications on the command line? We're in the 21st century!
 unset MAILCHECK
 
