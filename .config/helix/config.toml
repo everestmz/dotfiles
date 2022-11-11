@@ -1,0 +1,22 @@
+theme = "nord"
+
+[editor]
+line-number = "relative"
+cursorline = true
+true-color = true
+
+[editor.whitespace.render]
+space = "none"
+tab = "all"
+newline = "none"
+
+[editor.whitespace.characters]
+space = "·"
+nbsp = "⍽"
+tab = "→"
+newline = "⏎"
+tabpad = "·"
+
+[editor.indent-guides]
+render = false
+character = "|"

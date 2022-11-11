@@ -1,6 +1,6 @@
 OS  = $(shell uname)
 
-all: tmux zsh vim debian
+all: tmux zsh vim debian hx
 
 tmux:
 	@echo "====================="
@@ -19,6 +19,13 @@ zsh:
 	scripts/link .zshrc
 	scripts/link .zprezto
 	scripts/link .zpreztorc
+	@echo "====================="
+
+hx:
+	@echo "====================="
+	@echo "= Linking helix files:"	
+	mkdir -p ~/.config/helix
+	scripts/link .config/helix/config.toml
 	@echo "====================="
 
 vim:
