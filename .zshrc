@@ -81,10 +81,6 @@ SAVEHIST=500000
 export PATH=/usr/local/bin:${HOME}/.npm-global/bin:$PATH
 export PATH=$HOME/bin:$PATH
 
-# Python
-export PATH=$PATH:/Users/everest/anaconda2/bin
-export PATH="/usr/local/Cellar/python/2.7.11/Frameworks/Python.framework/Versions/2.7/bin:${PATH}"
-
 # Rust
 export PATH="$HOME/.cargo/bin:${PATH}"
 
@@ -97,15 +93,20 @@ export GOPATH=$HOME/go
 export GOBIN=$GOPATH/bin
 export PATH=$GOBIN:$PATH
 
-# Other Languages
-export PATH=$PATH:/Applications/Racket\ v6.9/bin
-export PATH=$PATH:/Library/TeX/Root/bin/x86_64-darwin/pdflatex
-export PATH=$PATH:/Users/everest/Library/Android/sdk/platform-tools
-export PATH=$PATH:/usr/local/share/dotnet
-export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
-
+# FLy.io
 export FLYCTL_INSTALL="${HOME}/.fly"
 export PATH="$FLYCTL_INSTALL/bin:$PATH"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# bun completions
+[ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 ###########
 # Aliases #
@@ -151,24 +152,13 @@ alias kc='kubectl'
 # Stuff
 alias newpassword='date +%s | shasum | base64 | head -c 32 ; echo'
 
-###########
-# Plugins #
-###########
+# Keyboard Dev
+alias mountfat="sudo mount -t vfat -o rw,uid=$(id -u),gid=$(id -g)"
 
-# fzf
+#########
+# Stuff #
+#########
 
 gpgconf --launch gpg-agent
 
 export PASSWORD_STORE_GPG_OPTS=--no-throw-keyids
-alias mountfat="sudo mount -t vfat -o rw,uid=$(id -u),gid=$(id -g)"
-
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
-# bun completions
-[ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
