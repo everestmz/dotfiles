@@ -24,11 +24,10 @@ zsh:
 vim:
 	@echo "====================="
 	@echo "= Linking vim files:"	
-	git clone https://github.com/VundleVim/Vundle.vim.git .vim/bundle/Vundle.vim
-	#igit clone  .vim/bundle/vundle
 	mkdir -p ./backups
-	scripts/link .vim
 	scripts/link .vimrc
+	mkdir -p $HOME/.vim/swapfiles
+	mkdir -p $HOME/.vim/backups
 	@echo "====================="
 
 debian:
