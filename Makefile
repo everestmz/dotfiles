@@ -1,6 +1,6 @@
 OS  = $(shell uname)
 
-all: tmux zsh vim
+all: tmux zsh vim debian
 
 tmux:
 	@echo "====================="
