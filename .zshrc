@@ -27,7 +27,6 @@ echo -e -n "\x1b[\x34 q" # changes to steady underline
 
 # Import local config if exists
 if [ -f $HOME/.zshrc_local ]; then
-  echo "Importing configuration from $HOME/.zshrc_local"
   source $HOME/.zshrc_local
 else
   echo "No local configuration found in $HOME/.zshrc_local"
@@ -35,17 +34,14 @@ fi
 
 # Import utilities
 if [ -f $HOME/z/z.sh ]; then
-  echo "z found - directory jumping enabled"
   . $HOME/z/z.sh
 else
-  echo "z not available"
 fi
 
 if [ -f ~/.fzf.zsh ]; then
   echo "fzf found - fuzzy finding enabled"
   source ~/.fzf.zsh
 elif which fzf > /dev/null; then
-  echo "fzf found - fuzzy finding enabled"
 else
   echo "fzf not available"
 fi
@@ -57,10 +53,8 @@ fpath=($HOME/dotfiles/completions $fpath)
 ###############
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   # Linux stuff
-  echo "Loading linux-specific preferences"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # macOS stuff
-  echo "Loading macOS-specific preferences"
 
   # Homebrew Make
   PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
@@ -85,6 +79,7 @@ SAVEHIST=500000
 ########
 
 export PATH=/usr/local/bin:${HOME}/.npm-global/bin:$PATH
+export PATH=$HOME/bin:$PATH
 
 # Python
 export PATH=$PATH:/Users/everest/anaconda2/bin
@@ -108,6 +103,9 @@ export PATH=$PATH:/Library/TeX/Root/bin/x86_64-darwin/pdflatex
 export PATH=$PATH:/Users/everest/Library/Android/sdk/platform-tools
 export PATH=$PATH:/usr/local/share/dotnet
 export PATH=$PATH:/Library/Frameworks/Mono.framework/Versions/Current/bin
+
+export FLYCTL_INSTALL="${HOME}/.fly"
+export PATH="$FLYCTL_INSTALL/bin:$PATH"
 
 ###########
 # Aliases #
@@ -162,3 +160,15 @@ alias newpassword='date +%s | shasum | base64 | head -c 32 ; echo'
 gpgconf --launch gpg-agent
 
 export PASSWORD_STORE_GPG_OPTS=--no-throw-keyids
+alias mountfat="sudo mount -t vfat -o rw,uid=$(id -u),gid=$(id -g)"
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# bun completions
+[ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
