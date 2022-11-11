@@ -2,10 +2,14 @@
 set -e
 
 export HOMELOCATION=$HOME/$1
+export BACKUPLOCATION=./backups/$1
+
+mkdir -p $(dirname $HOMELOCATION)
+mkdir -p $(dirname $BACKUPLOCATION)
 
 if [ -e $HOMELOCATION ] && [ ! -L $HOMELOCATION ]
 then
-  mv $HOMELOCATION ./backups/$1
+  mv $HOMELOCATION $BACKUPLOCATION
 else
   rm -rf $HOMELOCATION
 fi
