@@ -1,6 +1,7 @@
-theme = "nord"
+theme = "sonokai"
 
 [editor]
+bufferline = "multiple"
 line-number = "relative"
 cursorline = true
 true-color = true
