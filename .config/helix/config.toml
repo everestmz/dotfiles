@@ -5,6 +5,12 @@ bufferline = "multiple"
 line-number = "relative"
 cursorline = true
 true-color = true
+idle-timeout = 0
+completion-replace = true
+color-modes = true
+
+[editor.lsp]
+display-messages = true
 
 [editor.whitespace.render]
 space = "none"
@@ -21,3 +27,9 @@ tabpad = "·"
 [editor.indent-guides]
 render = false
 character = "|"
+
+[editor.soft-wrap]
+enable = true
+
+[keys.select]
+space = { g = ["yank", ":hsplit-new", "paste_after", ":pipe xargs ag | column -t"] }
