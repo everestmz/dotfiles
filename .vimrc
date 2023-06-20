@@ -23,6 +23,8 @@ set pastetoggle=<F2>
 set t_Co=256
 set background=dark
 
+colorscheme habamax
+
 set directory=~/.vim/swapfiles//
 set backupdir=~/.vim/backups//
 
