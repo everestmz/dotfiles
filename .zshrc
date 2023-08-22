@@ -25,13 +25,6 @@ echo -e -n "\x1b[\x34 q" # changes to steady underline
 # echo -e -n "\x1b[\x35 q" # changes to blinking bar
 # echo -e -n "\x1b[\x36 q" # changes to steady bar
 
-# Import local config if exists
-if [ -f $HOME/.zshrc_local ]; then
-  source $HOME/.zshrc_local
-else
-  echo "No local configuration found in $HOME/.zshrc_local"
-fi
-
 # Import utilities
 if [ -f $HOME/z/z.sh ]; then
   . $HOME/z/z.sh
@@ -104,10 +97,6 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun completions
 [ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
-
 ###########
 # Aliases #
 ###########
@@ -115,14 +104,21 @@ export NVM_DIR="$HOME/.nvm"
 # Git
 alias gd="git diff"
 alias gr="git rebase"
+alias grc="git rebase --continue"
+alias gra="git rebase --abort"
+
 alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
+alias gcnv="git commit --no-verify"
 alias gp="git push"
 alias gb="git branch"
 alias gco="git checkout"
 alias gfo='git fetch --prune origin'
-alias gfop='gfo && git pull'
+alias gform="git fetch --prune && git rebase origin/master"
+alias gfrom="git fetch --prune && git rebase origin/master"
+
+alias gf="vim -c :G"
 
 # Zshrc
 alias zshrc="vim ~/.zshrc"
@@ -154,6 +150,19 @@ alias newpassword='date +%s | shasum | base64 | head -c 32 ; echo'
 
 # Keyboard Dev
 alias mountfat="sudo mount -t vfat -o rw,uid=$(id -u),gid=$(id -g)"
+
+#########
+# Local #
+########
+
+# Import local config if exists
+# We do this at the end to allow local to override PATH and other vars  
+if [ -f $HOME/.zshrc_local ]; then
+  source $HOME/.zshrc_local
+else
+  echo "No local configuration found in $HOME/.zshrc_local"
+fi
+
 
 #########
 # Stuff #
