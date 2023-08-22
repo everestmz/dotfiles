@@ -5,11 +5,11 @@ bufferline = "multiple"
 line-number = "relative"
 cursorline = true
 true-color = true
-idle-timeout = 300
+idle-timeout = 50
 color-modes = true
 
 [editor.lsp]
-display-inlay-hints = true
+display-inlay-hints = false
 display-messages = true
 
 [editor.whitespace.render]
@@ -31,13 +31,13 @@ character = "|"
 [editor.soft-wrap]
 enable = true
 
-[editor.jump-mode]
-jump-keys = "ghfjdkslatyrueiwoqpbnvmcxz" # default is "jwetovxqpdygfblzhckisuranm"
+# [editor.jump-mode]
+# jump-keys = "ghfjdkslatyrueiwoqpbnvmcxzGHFJDKSLATYRUEIWOQPBNVMCXZ" # default is "jwetovxqpdygfblzhckisuranm"
 
 [keys.normal]
 "ret" = ["move_line_down", "goto_first_nonwhitespace"] # Maps the enter key to move to start of next line
 X = "extend_line_above"
-g = { t = ":tab-next" }
+# g = { t = ":tab-next" }
 
 [keys.select]
 space = { g = ["yank", ":hsplit-new", "paste_after", ":pipe xargs ag | column -t"] }
