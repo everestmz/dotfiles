@@ -97,6 +97,10 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # bun completions
 [ -s "${HOME}/.bun/_bun" ] && source "${HOME}/.bun/_bun"
 
+# Helix
+export HELIX_CONFIG=${HOME}/.config/helix/config.toml
+export HELIX_LANG=${HOME}/.config/helix/languages.toml
+
 ###########
 # Aliases #
 ###########
