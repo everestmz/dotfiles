@@ -7,14 +7,20 @@ cursorline = true
 true-color = true
 idle-timeout = 0
 color-modes = true
+auto-format = true
+jump-label-alphabet = "ghfjdkslaurytieowbvncmxpqz" # QWERTY home row, then top/bottom, moving out from the middle
 
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
 select = "underline"
 
+[editor.inline-diagnostics]
+cursor-line = "hint"
+other-lines = "error"
+
 [editor.lsp]
-display-inlay-hints = false
+display-inlay-hints = true
 display-messages = true
 
 [editor.whitespace.render]
@@ -36,13 +42,17 @@ character = "|"
 [editor.soft-wrap]
 enable = true
 
-# [editor.jump-mode]
-# jump-keys = "ghfjdkslatyrueiwoqpbnvmcxzGHFJDKSLATYRUEIWOQPBNVMCXZ" # default is "jwetovxqpdygfblzhckisuranm"
-
 [keys.normal]
 "ret" = ["move_line_down", "goto_first_nonwhitespace"] # Maps the enter key to move to start of next line
 X = "extend_line_above"
+"space" = { c = "file_picker_in_current_buffer_directory" }
 # g = { t = ":tab-next" }
 
 [keys.select]
 space = { g = ["yank", ":hsplit-new", "paste_after", ":pipe xargs ag | column -t"] }
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name"]
+center = ["spacer", "diagnostics"]
+right = ["position", "position-percentage", "file-type", "separator", "file-line-ending", "separator", "selections", "file-encoding"]
+separator = "|"
