@@ -104,6 +104,7 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Git
 alias gd="git diff"
 alias gr="git rebase"
+alias grass="git rebase -i --autostash --autosquash"
 alias grc="git rebase --continue"
 alias gra="git rebase --abort"
 
@@ -111,12 +112,18 @@ alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
 alias gcnv="git commit --no-verify"
+alias gcn="git commit --no-verify"
 alias gp="git push"
+alias gph="git push -u origin HEAD"
+alias gphf="git push -u origin +HEAD"
 alias gb="git branch"
 alias gco="git checkout"
 alias gfo='git fetch --prune origin'
 alias gform="git fetch --prune && git rebase origin/master"
 alias gfrom="git fetch --prune && git rebase origin/master"
+alias gfromast="gfrom --autostash"
+alias gfromasq="gfrom --autosquash"
+alias gfromaa="gfrom --autostash --autosquash"
 
 alias gf="vim -c :G"
 
@@ -167,7 +174,5 @@ fi
 #########
 # Stuff #
 #########
-
-gpgconf --launch gpg-agent
 
 export PASSWORD_STORE_GPG_OPTS=--no-throw-keyids
