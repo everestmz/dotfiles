@@ -14,11 +14,8 @@ tmux:
 zsh:
 	@echo "====================="
 	@echo "= Linking zsh files:"	
-	git clone --recurse-submodules https://github.com/everestmz/zprezto.git ./.zprezto
 	mkdir -p ./backups
 	scripts/link .zshrc
-	scripts/link .zprezto
-	scripts/link .zpreztorc
 	@echo "====================="
 
 hx:
