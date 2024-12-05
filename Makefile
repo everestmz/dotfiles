@@ -1,6 +1,6 @@
 OS  = $(shell uname)
 
-all: tmux zsh vim debian hx
+all: tmux zsh vim debian hx starship
 
 tmux:
 	@echo "====================="
@@ -35,6 +35,13 @@ vim:
 	scripts/link .vimrc
 	mkdir -p $HOME/.vim/swapfiles
 	mkdir -p $HOME/.vim/backups
+	@echo "====================="
+
+starship:
+	@echo "====================="
+	@echo "= Linking starship files:"
+	mkdir -p ./backups
+	scripts/link .config/starship.toml
 	@echo "====================="
 
 debian:

@@ -1,9 +1,9 @@
 # Everest Munro-Zeisberger zshrc
 
 # Source Prezto.
-if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
-  source "$HOME/.zprezto/init.zsh"
-fi
+# if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
+#   source "$HOME/.zprezto/init.zsh"
+# fi
 
 if [ -v SSH_CONNECTION ]; then
   if [[ $PROMPT == *"${HOST}"* ]]; then
@@ -32,11 +32,10 @@ else
 fi
 
 if [ -f ~/.fzf.zsh ]; then
-  echo "fzf found - fuzzy finding enabled"
   source ~/.fzf.zsh
 elif which fzf > /dev/null; then
 else
-  echo "fzf not available"
+  echo "fzf not installed"
 fi
 
 fpath=($HOME/dotfiles/completions $fpath)
@@ -180,3 +179,44 @@ fi
 #########
 
 export PASSWORD_STORE_GPG_OPTS=--no-throw-keyids
+
+##########
+# STARSHIP
+
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+else
+  echo "starship not installed - defaulting to standard shell"
+fi
+
+# Enable search on up arrow
+bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
+
+# Try to find and source zsh-syntax-highlighting
+potential_paths=(
+  "/opt/homebrew/share/zsh-syntax-highlighting"              # macOS ARM
+  "/usr/local/share/zsh-syntax-highlighting"                 # macOS Intel
+  "/usr/share/zsh-syntax-highlighting"                       # Many Linux distros
+  "/usr/share/zsh/plugins/zsh-syntax-highlighting"           # Arch Linux
+  "${HOME}/.zsh/zsh-syntax-highlighting"                     # Manual installation
+)
+
+
+found_highlighting=false
+for path in "${potential_paths[@]}"; do
+  if [[ -d "$path" ]]; then
+    ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="$path/highlighters"
+    source "$path/zsh-syntax-highlighting.zsh"
+
+    # Configure colors for command validation
+    ZSH_HIGHLIGHT_STYLES[command]='fg=green'
+    ZSH_HIGHLIGHT_STYLES[unknown-token]='fg=red'
+    found_highlighting=true
+    break
+  fi
+done
+
+if [[ "$found_highlighting" = false ]]; then
+  echo "zsh-syntax-highlighting not installed"
+fi
