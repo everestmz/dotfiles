@@ -191,9 +191,39 @@ else
   echo "starship not installed - defaulting to standard shell"
 fi
 
-# Enable search on up arrow
-bindkey '^[[A' history-beginning-search-backward
-bindkey '^[[B' history-beginning-search-forward
+###########################
+# TODO: need to make this work on linux too
+# this plugin enables the substring search (vs the default beginning search only)
+source $(brew --prefix)/share/zsh-history-substring-search/zsh-history-substring-search.zsh
+plugins=(zsh-history-substring-search ssh-agent)
+
+# NOTE: heavily copied from the history-search-end function, just modified to work with the substring-search plugin
+substring-search-end() {
+  integer cursor=$CURSOR mark=$MARK
+
+  if [[ $LASTWIDGET = *-substring-search-*-end ]]; then
+    CURSOR=$MARK
+  else
+    MARK=$CURSOR
+  fi
+
+  # Remove -end from widget name to get the base plugin widget
+  if zle ${WIDGET%-end}; then
+    zle end-of-line
+  else
+    CURSOR=$cursor
+    MARK=$mark
+    return 1
+  fi
+}
+
+# Name our widgets to match the plugin's pattern, just adding -end
+zle -N history-substring-search-up-end substring-search-end
+zle -N history-substring-search-down-end substring-search-end
+
+bindkey "^[[A" history-substring-search-up-end
+bindkey "^[[B" history-substring-search-down-end
+##########################
 
 # Try to find and source zsh-syntax-highlighting
 potential_paths=(
