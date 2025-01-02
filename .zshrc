@@ -111,6 +111,8 @@ alias grass="git rebase -i --autostash --autosquash"
 alias grc="git rebase --continue"
 alias gra="git rebase --abort"
 
+alias gl="git log"
+alias glo="git log --oneline"
 alias gs="git status"
 alias ga="git add"
 alias gc="git commit"
@@ -202,12 +204,11 @@ potential_paths=(
   "${HOME}/.zsh/zsh-syntax-highlighting"                     # Manual installation
 )
 
-
 found_highlighting=false
-for path in "${potential_paths[@]}"; do
-  if [[ -d "$path" ]]; then
-    ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="$path/highlighters"
-    source "$path/zsh-syntax-highlighting.zsh"
+for potential in "${potential_paths[@]}"; do
+  if [[ -d "$potential" ]]; then
+    ZSH_HIGHLIGHT_HIGHLIGHTERS_DIR="$potential/highlighters"
+    source "$potential/zsh-syntax-highlighting.zsh"
 
     # Configure colors for command validation
     ZSH_HIGHLIGHT_STYLES[command]='fg=green'
