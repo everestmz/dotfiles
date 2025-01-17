@@ -41,6 +41,13 @@ starship:
 	scripts/link .config/starship.toml
 	@echo "====================="
 
+starship:
+	@echo "====================="
+	@echo "= Linking ghostty files:"
+	mkdir -p ./backups
+	scripts/link .config/ghostty/config
+	@echo "====================="
+
 debian:
 ifeq ($(OS), Linux)
 	@echo "====================="

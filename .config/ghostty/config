@@ -1,0 +1,13 @@
+confirm-close-surface = true
+
+window-save-state = always
+cursor-click-to-move = true
+
+macos-titlebar-style = tabs
+window-vsync = true
+
+keybind = global:cmd+`=toggle_quick_terminal
+
+theme = catppuccin-macchiato
+
+macos-option-as-alt = left
