@@ -149,7 +149,16 @@ alias l='ls'
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../../'
-alias s='sudo'
+
+# Plan
+alias pa="plan add"
+alias pd="plan done"
+alias ppd="plan pickdone"
+alias pad="plan did" # basically plan-add-done
+alias pl="plan list"
+alias pm="plan mode"
+alias pms="plan showmode"
+alias pc="plan closeout"
 
 # C++
 alias g++11="g++ -std=c++11"

@@ -1,14 +1,7 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "$directory$git_state$git_branch$git_metrics$character"
-
-# Inserts a blank line between shell prompts
-# add_newline = true
-
-# Replace the '❯' symbol in the prompt with '➜'
-# [character] # The name of the module we are configuring is 'character'
-# success_symbol = '[➜](bold green)' # The 'success_symbol' segment is being set to '➜' with the color 'bold green'
+format = "${custom.planmode}$directory$git_state$git_branch$git_metrics$character"
 
 # Disable the package module, hiding it from the prompt completely
 [package]
@@ -20,3 +13,8 @@ format = "$branch(:$remote_branch) "
 [git_metrics]
 disabled = false
 
+[custom.planmode]
+command = "cat ~/.config/.plan_mode 2>/dev/null | awk '{print substr($0, 0, 1)}'"
+when = "test -f ~/.config/.plan_mode"
+format = "[$output]($style) "
+style = "bold yellow"

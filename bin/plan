@@ -1,0 +1,125 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+NOTES_DIR="$HOME/notes/Base/log"
+MODE_FILE="$HOME/.config/.plan_mode"
+
+# load current mode
+if [[ -f "$MODE_FILE" ]]; then
+  PLAN_MODE=$(cat "$MODE_FILE")
+else
+  PLAN_MODE=""
+fi
+
+CTX_DIR="$NOTES_DIR"
+if [[ -n "$PLAN_MODE" ]]; then
+  CTX_DIR="$NOTES_DIR/$PLAN_MODE"
+fi
+
+mkdir -p "$CTX_DIR"
+
+TODAY="$(date +%F)"
+TODAY_FILE="$CTX_DIR/$TODAY.md"
+
+cmd="${1:-}"
+
+case "$cmd" in
+  add)
+    shift
+    task="$@"
+    if [[ ! -f "$TODAY_FILE" ]]; then
+      echo -e "# $TODAY\n" > "$TODAY_FILE"
+    fi
+    echo "- [ ] $task" >> "$TODAY_FILE"
+    echo "added: $task"
+    ;;
+
+  edit)
+    shift
+    $EDITOR $TODAY_FILE
+    ;;
+  did)
+    shift
+    task="$@"
+    if [[ ! -f "$TODAY_FILE" ]]; then
+      echo -e "# $TODAY\n" > "$TODAY_FILE"
+    fi
+    echo "- [x] $task" >> "$TODAY_FILE"
+    echo "logged as done: $task"
+    ;;
+
+  done)
+    shift
+    regex="$@"
+    file=$(grep -rl "\- \[ \].*$regex" "$CTX_DIR" | head -n1)
+    if [[ -z "${file:-}" ]]; then
+      echo "no matching open task found"
+      exit 1
+    fi
+    sed -i '' "/^- \[ \] .*$regex/ { s/^- \[ \] /- [x] /; q; }" "$file"
+    echo "marked done: $regex"
+    ;;
+
+  pickdone)
+    selected=$(grep -nR '^- \[ \] ' "$CTX_DIR" | fzf --prompt="Mark done: " --no-sort || true)
+    if [[ -z "${selected:-}" ]]; then
+      echo "no selection"
+      exit 0
+    fi
+    file=$(echo "$selected" | cut -d: -f1)
+    line_num=$(echo "$selected" | cut -d: -f2)
+    task_text=$(echo "$selected" | cut -d: -f3-)
+    sed -i '' "${line_num}s/^- \[ \] /- [x] /" "$file"
+    echo "marked done: ${task_text:6}"
+    ;;
+
+  list)
+    grep -R '\[ \]' "$CTX_DIR" || echo "no open tasks"
+    ;;
+
+  mode)
+    shift
+    new_mode="$@"
+    echo "$new_mode" > "$MODE_FILE"
+    echo "mode set to: $new_mode"
+    ;;
+
+  showmode)
+    if [[ -n "$PLAN_MODE" ]]; then
+      echo "current mode: $PLAN_MODE"
+    else
+      echo "no mode set"
+    fi
+    ;;
+
+  closeout)
+    echo "=== Today's Open Tasks ==="
+    if [[ -f "$TODAY_FILE" ]]; then
+      grep '^- \[ \]' "$TODAY_FILE" || echo "(none)"
+    else
+      echo "(no tasks today)"
+    fi
+    echo
+    echo "Mark any as done? (y/n)"
+    read -r resp
+    if [[ "$resp" == "y" ]]; then
+      selected=$(grep '^- \[ \]' "$TODAY_FILE" | fzf --prompt="Mark done: " --multi --no-sort || true)
+      if [[ -n "${selected:-}" ]]; then
+        while IFS= read -r line; do
+          text=$(echo "$line" | sed 's/^- \[ \] //')
+          escaped=$(printf '%s\n' "$text" | sed 's/[[\.*^$/]/\\&/g')
+          sed -i '' "0,/- \[ \] $escaped/s//- [x] $text/" "$TODAY_FILE"
+          echo "marked done: $text"
+        done <<< "$selected"
+      fi
+    fi
+    echo
+    echo "Closeout complete. Good work."
+    ;;
+
+  *)
+    echo "usage: $0 {add|did|done|pickdone|list|mode|showmode|closeout} [args]"
+    exit 1
+    ;;
+esac
+

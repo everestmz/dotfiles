@@ -1,6 +1,6 @@
 OS  = $(shell uname)
 
-all: tmux zsh vim debian hx starship
+all: tmux zsh vim debian hx starship ghostty bin
 
 tmux:
 	@echo "====================="
@@ -41,11 +41,18 @@ starship:
 	scripts/link .config/starship.toml
 	@echo "====================="
 
-starship:
+ghostty:
 	@echo "====================="
 	@echo "= Linking ghostty files:"
 	mkdir -p ./backups
 	scripts/link .config/ghostty/config
+	@echo "====================="
+
+bin:
+	@echo "====================="
+	@echo "= Linking bin:"
+	mkdir -p ./backups
+	scripts/link bin
 	@echo "====================="
 
 debian:
@@ -61,3 +68,5 @@ ifeq ($(OS), Linux)
 	scripts/link .config/i3status/config
 	@echo "====================="
 endif
+
+.PHONY: bin
