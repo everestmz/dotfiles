@@ -29,7 +29,7 @@ fi
 
 if [ -f ~/.fzf.zsh ]; then
   source ~/.fzf.zsh
-elif which fzf > /dev/null; then
+elif command -v fzf > /dev/null; then
 else
   echo "fzf not installed"
 fi
