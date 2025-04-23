@@ -24,6 +24,7 @@ echo -e -n "\x1b[\x34 q" # changes to steady underline
 if [ -f $HOME/z/z.sh ]; then
   . $HOME/z/z.sh
 else
+  echo "z.sh not installed"
 fi
 
 if [ -f ~/.fzf.zsh ]; then
