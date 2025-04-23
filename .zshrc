@@ -1,10 +1,5 @@
 # Everest Munro-Zeisberger zshrc
 
-# Source Prezto.
-# if [[ -s "$HOME/.zprezto/init.zsh" ]]; then
-#   source "$HOME/.zprezto/init.zsh"
-# fi
-
 if [ -v SSH_CONNECTION ]; then
   if [[ $PROMPT == *"${HOST}"* ]]; then
     echo "SSH Prompt set"
@@ -109,16 +104,21 @@ export HELIX_LANG=${HOME}/.config/helix/languages.toml
 
 # get default branch of origin
 get_default_branch() {
-  git remote show origin | awk '/HEAD branch/ {print $NF}'
+  git symbolic-ref refs/remotes/origin/HEAD 2>/dev/null | sed 's@^refs/remotes/origin/@@'
 }
+
 gform() {
   git fetch --prune && git rebase origin/$(get_default_branch)
 }
+
 gfrom() {
   git fetch --prune && git rebase origin/$(get_default_branch) "$@"
 }
+
 gfromast() { gfrom --autostash "$@"; }
+
 gfromasq() { gfrom --autosquash "$@"; }
+
 gfromaa()  { gfrom --autostash --autosquash "$@"; }
 
 
@@ -196,7 +196,9 @@ alias mountfat="sudo mount -t vfat -o rw,uid=$(id -u),gid=$(id -g)"
 # Import local config if exists
 # We do this at the end to allow local to override PATH and other vars  
 if [ -f $HOME/.zshrc_local ]; then
+  echo "Loading .zshrc_local..."
   source $HOME/.zshrc_local
+  echo "Loaded .zshrc_local"
 else
   echo "No local configuration found in $HOME/.zshrc_local"
 fi
