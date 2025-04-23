@@ -100,6 +100,25 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 export HELIX_CONFIG=${HOME}/.config/helix/config.toml
 export HELIX_LANG=${HOME}/.config/helix/languages.toml
 
+###############
+# Git helpers #
+###############
+
+# get default branch of origin
+get_default_branch() {
+  git remote show origin | awk '/HEAD branch/ {print $NF}'
+}
+gform() {
+  git fetch --prune && git rebase origin/$(get_default_branch)
+}
+gfrom() {
+  git fetch --prune && git rebase origin/$(get_default_branch) "$@"
+}
+gfromast() { gfrom --autostash "$@"; }
+gfromasq() { gfrom --autosquash "$@"; }
+gfromaa()  { gfrom --autostash --autosquash "$@"; }
+
+
 ###########
 # Aliases #
 ###########
@@ -124,11 +143,6 @@ alias gphf="git push -u origin +HEAD"
 alias gb="git branch"
 alias gco="git checkout"
 alias gfo='git fetch --prune origin'
-alias gform="git fetch --prune && git rebase origin/master"
-alias gfrom="git fetch --prune && git rebase origin/master"
-alias gfromast="gfrom --autostash"
-alias gfromasq="gfrom --autosquash"
-alias gfromaa="gfrom --autostash --autosquash"
 
 alias gf="vim -c :G"
 
