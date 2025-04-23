@@ -48,6 +48,9 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   # macOS stuff
 
+  # Homebrew ARM Path
+  export PATH="/opt/homebrew/bin:$PATH"
+
   # Homebrew Make
   PATH="/usr/local/opt/make/libexec/gnubin:$PATH"
 
