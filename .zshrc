@@ -122,6 +122,20 @@ gfromasq() { gfrom --autosquash "$@"; }
 
 gfromaa()  { gfrom --autostash --autosquash "$@"; }
 
+gwt () {
+  local branch="$1"
+  [ -z "$branch" ] && { echo "usage: gwt <branch>"; return 1; }
+
+  local root="$(git rev-parse --show-toplevel)"
+  local repo="$(basename "$root")"
+  local wt_path="$(dirname "$root")/${repo}_worktrees/${branch}"
+
+  mkdir -p "$(dirname "$wt_path")"  
+
+  git worktree add -B "$branch" "$wt_path" \
+    "origin/$(get_default_branch || echo main)"
+}
+
 
 ###########
 # Aliases #
