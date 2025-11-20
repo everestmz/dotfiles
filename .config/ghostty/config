@@ -1,4 +1,4 @@
-confirm-close-surface = true
+confirm-close-surface = always
 
 window-save-state = always
 cursor-click-to-move = true
@@ -11,3 +11,4 @@ keybind = global:cmd+`=toggle_quick_terminal
 theme = catppuccin-macchiato
 
 macos-option-as-alt = left
+keybind = shift+enter=text:\x1b\r
