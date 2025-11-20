@@ -136,6 +136,13 @@ gwt () {
     "origin/$(get_default_branch || echo main)"
 }
 
+##############
+# jj helpers #
+##############
+
+jpg () {
+  jj git push --allow-new --branch "glob:$1"
+}
 
 ###########
 # Aliases #
@@ -163,6 +170,19 @@ alias gco="git checkout"
 alias gfo='git fetch --prune origin'
 
 alias gf="vim -c :G"
+
+# jj
+alias jl="jj log"
+# "jj log mine"
+alias jlm=jj log -r "author('$(jj config get user.email)') & (main@origin..)"
+alias js="jj status"
+alias jd="jj diff"
+alias jr="jj rebase"
+alias je="jj edit"
+alias jf="jj git fetch"
+alias jbc="jj bookmark create"
+alias jpb="jj git push --allow-new --branch"
+alias jfrom="jj git fetch && jj rebase -d main@origin -s"
 
 # Zshrc
 alias zshrc="vim ~/.zshrc"
@@ -292,5 +312,8 @@ for potential in "${potential_paths[@]}"; do
 done
 
 if [[ "$found_highlighting" = false ]]; then
-  echo "zsh-syntax-highlighting not installed"
+  echo "zsh-syntax-highlighting not installed (brew install zsh-syntax-highlighting)"
 fi
+
+# opencode
+export PATH=/Users/everest/.opencode/bin:$PATH
