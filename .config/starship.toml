@@ -1,14 +1,15 @@
 # Get editor completions based on the config schema
 "$schema" = 'https://starship.rs/config-schema.json'
 
-format = "${custom.planmode}$directory$git_state$git_branch$git_metrics$character"
+format = "${custom.planmode}$directory$git_state${custom.jj_revision}${custom.jj_description}${custom.git_branch_when_not_jj}$git_metrics$character"
 
 # Disable the package module, hiding it from the prompt completely
 [package]
 disabled = true
 
+# Disable the built-in git_branch module (we'll use our custom one)
 [git_branch]
-format = "$branch(:$remote_branch) "
+disabled = true
 
 [git_metrics]
 disabled = false
@@ -18,3 +19,48 @@ command = "cat ~/.config/.plan_mode 2>/dev/null | awk '{print substr($0, 0, 1)}'
 when = "test -f ~/.config/.plan_mode"
 format = "[$output]($style) "
 style = "bold yellow"
+
+[custom.jj]
+command = """
+change=$(jj log -r @ -T 'change_id.shortest()' --no-graph 2>/dev/null)
+bookmark=$(jj log -r @ -T 'bookmarks.join(", ")' --no-graph 2>/dev/null | grep -v '^$')
+description=$(jj log -r @ -T 'description.first_line()' --no-graph 2>/dev/null | cut -c1-30)
+
+if [ -n "$bookmark" ]; then
+    echo "${change} (${bookmark})"
+elif [ -n "$description" ]; then
+    echo "${change} (${description})"
+else
+    echo "$change"
+fi
+"""
+when = "test -d .jj"
+format = "[$output]($style) "
+style = "bold purple"
+
+[custom.jj_revision]
+command = "jj log -r @ -T 'change_id.shortest()' --no-graph 2>/dev/null" 
+when = "test -d .jj"
+format = "[$output]($style) "
+style = "bold purple"
+
+[custom.jj_description]
+command = """
+bookmark=$(jj log -r @ -T 'bookmarks.join(", ")' --no-graph 2>/dev/null | grep -v '^$')
+description=$(jj log -r @ -T 'description.first_line()' --no-graph 2>/dev/null | cut -c1-30)
+
+if [ -n "$bookmark" ]; then
+    echo "${bookmark}"
+elif [ -n "$description" ]; then
+    echo "${description}"
+fi
+"""
+when = "test -d .jj"
+format = "[$output]($style) "
+style = "green"
+
+[custom.git_branch_when_not_jj]
+command = "git symbolic-ref --short HEAD 2>/dev/null || git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD 2>/dev/null"
+when = "git rev-parse --git-dir > /dev/null 2>&1 && ! test -d .jj"
+format = "[$output]($style) "
+style = "bold green"
